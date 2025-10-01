@@ -62,9 +62,9 @@ function pageload(p: number) {
         const denom = asset?.symbol || coin.denom;
         return {
           denom: denom.split('/')[denom.split('/').length - 1].toUpperCase(),
-          amount: format.tokenAmountNumber({ amount: coin.amount, denom: denom }).toString(),
+          amount: Intl.NumberFormat('en-US').format(format.tokenAmountNumber({ amount: coin.amount, denom: coin.denom })),
           base: asset.base || coin.denom,
-          info: asset.display || coin.denom,
+          info: asset.symbol || coin.denom,
           logo: asset?.logo_URIs?.svg || asset?.logo_URIs?.png || '/logo.svg',
         };
       })
@@ -81,7 +81,6 @@ function pageload(p: number) {
           <td>Logo</td>
           <td>Token</td>
           <td>Amount</td>
-          <td>Info</td>
           <td>Base</td>
         </tr>
       </thead>
@@ -91,7 +90,6 @@ function pageload(p: number) {
         </td>
         <td>{{ item.denom }}</td>
         <td>{{ item.amount }}</td>
-        <td>{{ item.info }}</td>
         <td>{{ item.base }}</td>
       </tr>
     </table>
